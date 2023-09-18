@@ -5,6 +5,7 @@ from .serializer import waterSerializer, kartaSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -26,6 +27,11 @@ from rest_framework import generics
 class GetAllWater(generics.ListAPIView):
     queryset=water.objects.all()
     serializer_class=waterSerializer
+    permission_classes=(IsAuthenticated,)
+
+    def get_queryset(self):
+        print(self.request.user)
+        return water.objects.all()
 
 
 
@@ -91,7 +97,11 @@ class AllFunctionWater(generics.RetrieveUpdateDestroyAPIView):
 class GetAllKarta(generics.ListAPIView):
     queryset=karta.objects.all()
     serializer_class=kartaSerializer
+    permission_classes=(IsAuthenticated,)
 
+    def get_queryset(self):
+        print(self.request.user)
+        return karta.objects.all()
 class GetDetailKarta(generics.RetrieveAPIView):
     queryset = karta.objects.all()
     serializer_class=kartaSerializer
